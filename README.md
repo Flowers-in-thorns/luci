@@ -1,5 +1,23 @@
 # OpenWrt luci feed
 
+## Modify Content
+The disgusting rollback mechanism is killed by default.
+
+The prompt box after saving the application will disappear soon.
+
+You can use my luci app to change the retention time of the prompt box.
+
+I use feel great !
+
+## 修改内容
+默认情况下，恶心的回滚机制将被禁用。
+
+保存应用程序后的提示框将很快消失。
+
+您可以使用我的luci应用程序来更改提示框的保留时间。
+
+我使用起来感觉非常的舒服！
+
 ## Description
 
 This is the OpenWrt "luci"-feed containing LuCI - OpenWrt Configuration Interface.
