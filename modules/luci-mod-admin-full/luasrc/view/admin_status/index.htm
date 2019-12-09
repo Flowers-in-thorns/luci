@@ -47,13 +47,14 @@
 
 		local rv = {
 			uptime     = sysinfo.uptime or 0,
-			localtime  = os.date(),
+			localtime  = os.date("%Y年%m月%d日") .. " " .. translate(os.date("%A")) .. " " .. os.date("%X"),
 			loadavg    = sysinfo.load or { 0, 0, 0 },
 			memory     = meminfo,
 			swap       = swapinfo,
 			connmax    = conn_max,
 			conncount  = conn_count,
-			wifinets   = stat.wifi_networks()
+			wifinets   = stat.wifi_networks(),
+			cpu_free   = tonumber(luci.sys.exec("echo `top -n 1 | grep CPU | grep -v grep | head -n 1 | awk '{print $8}' | sed 's/\\(.*\\)\\(.\\)$/\\1/'`")),
 		}
 
 		if wan then
@@ -324,35 +325,41 @@
 					info.loadavg[1] / 65535.0,
 					info.loadavg[2] / 65535.0
 				);
+				
+			if (e = document.getElementById('cpu_free'))
+				e.innerHTML = progressbar(
+					info.cpu_free + "%",
+					100 + "%"
+				);
 
 			if (e = document.getElementById('memtotal'))
 				e.innerHTML = progressbar(
-					((info.memory.free + info.memory.buffered) / 1024) + " <%:kB%>",
-					(info.memory.total / 1024) + " <%:kB%>"
+					Math.floor((info.memory.free + info.memory.buffered) / 1048576) + " <%:MB%>",
+					Math.floor(info.memory.total / 1048576) + " <%:MB%>"
 				);
 
 			if (e = document.getElementById('memfree'))
 				e.innerHTML = progressbar(
-					(info.memory.free / 1024) + " <%:kB%>",
-					(info.memory.total / 1024) + " <%:kB%>"
+					Math.floor(info.memory.free / 1048576) + " <%:MB%>",
+					Math.floor(info.memory.total / 1048576) + " <%:MB%>"
 				);
 
 			if (e = document.getElementById('membuff'))
 				e.innerHTML = progressbar(
-					(info.memory.buffered / 1024) + " <%:kB%>",
-					(info.memory.total / 1024) + " <%:kB%>"
+					Math.floor(info.memory.buffered / 1048576) + " <%:MB%>",
+					Math.floor(info.memory.total / 1048576) + " <%:MB%>"
 				);
 
 			if (e = document.getElementById('swaptotal'))
 				e.innerHTML = progressbar(
-					(info.swap.free / 1024) + " <%:kB%>",
-					(info.swap.total / 1024) + " <%:kB%>"
+					Math.floor(info.swap.free / 1048576) + " <%:MB%>",
+					Math.floor(info.swap.total / 1048576) + " <%:MB%>"
 				);
 
 			if (e = document.getElementById('swapfree'))
 				e.innerHTML = progressbar(
-					(info.swap.free / 1024) + " <%:kB%>",
-					(info.swap.total / 1024) + " <%:kB%>"
+					Math.floor(info.swap.free / 1048576) + " <%:MB%>",
+					Math.floor(info.swap.total / 1048576) + " <%:MB%>"
 				);
 
 			if (e = document.getElementById('conns'))
@@ -379,6 +386,14 @@
 		<div class="tr"><div class="td left" width="33%"><%:Local Time%></div><div class="td left" id="localtime">-</div></div>
 		<div class="tr"><div class="td left" width="33%"><%:Uptime%></div><div class="td left" id="uptime">-</div></div>
 		<div class="tr"><div class="td left" width="33%"><%:Load Average%></div><div class="td left" id="loadavg">-</div></div>
+	</div>
+</div>
+
+<div class="cbi-section">
+	<h3><%:CPU%></h3>
+
+	<div class="table" width="100%">
+		<div class="tr"><div class="td left" width="33%"><%:Total Available%></div><div class="td left" id="cpu_free">-</div></div>
 	</div>
 </div>
 

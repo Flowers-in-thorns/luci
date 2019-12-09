@@ -1,0 +1,20 @@
+msgid "LuCI 18 Settings"
+msgstr "LuCI 18 设置"
+
+msgid "LuCI 18 saves application box time, Unit: second"
+msgstr "设置LuCI 18的保存应用提示框时间，单位：秒"
+
+msgid "Global Setting"
+msgstr "全局配置"
+
+msgid "rollback time"
+msgstr "回滚保留时间"
+
+msgid "holdoff time"
+msgstr "拖延保留时间"
+
+msgid "timeout time"
+msgstr "超时保留时间"
+
+msgid "display time"
+msgstr "保存应用后保留时间"
